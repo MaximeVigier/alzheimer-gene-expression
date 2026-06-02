@@ -115,3 +115,68 @@ def quantile_normalize(matrix: pd.DataFrame) -> pd.DataFrame:
     ranks = matrix.rank(method="average", axis=0)
     normed = ranks.apply(lambda col: np.interp(col, positions, reference), axis=0)
     return pd.DataFrame(normed, index=matrix.index, columns=matrix.columns)
+
+
+def filter_by_abscall(
+    expr: pd.DataFrame, abscall: pd.DataFrame, min_present: int
+) -> pd.DataFrame:
+    """Conserve les sondes « Present » (call ``P``) dans au moins `min_present`
+    échantillons.
+
+    Le seuil `min_present` est typiquement calé sur la taille du plus petit
+    groupe : une sonde marqueur d'un seul groupe (ex. surexprimée uniquement
+    chez les patients) reste ainsi conservée.
+
+    Parameters
+    ----------
+    expr : matrice d'expression (sondes × échantillons).
+    abscall : matrice des detection calls, mêmes index/colonnes que `expr`.
+    min_present : seuil k (nombre minimal d'échantillons « Present »).
+    """
+    abscall = abscall.reindex(index=expr.index, columns=expr.columns)
+    present_counts = (abscall == "P").sum(axis=1)
+    kept = present_counts[present_counts >= min_present].index
+    return expr.loc[kept]
+
+
+def collapse_probes_to_genes(
+    expr: pd.DataFrame,
+    probe_to_symbol: pd.Series,
+    multi_sep: str = "///",
+) -> pd.DataFrame:
+    """Réduit la matrice sondes × échantillons à une matrice gènes × échantillons.
+
+    Stratégie « sonde la plus exprimée » (max mean) : pour chaque gène, on
+    conserve la sonde dont l'intensité moyenne (sur tous les échantillons) est
+    la plus forte — celle au meilleur rapport signal/bruit.
+
+    Les sondes sont écartées proprement (jamais mappées au hasard) si :
+      - elles n'ont **pas** de symbole de gène (NaN ou vide) ;
+      - elles portent **plusieurs** symboles (ex. ``'DDR1 /// MIR4640'``),
+        car l'attribution à un gène unique serait arbitraire.
+
+    Parameters
+    ----------
+    expr : matrice d'expression (sondes × échantillons).
+    probe_to_symbol : Series indexée par ID de sonde → symbole de gène.
+    multi_sep : séparateur des symboles multiples dans l'annotation.
+
+    Returns
+    -------
+    pandas.DataFrame indexé par symbole de gène (un gène = une ligne).
+    """
+    symbols = probe_to_symbol.reindex(expr.index).astype("string").str.strip()
+
+    # Sondes valides : symbole présent, non vide, et non multiple.
+    valid = symbols.notna() & (symbols != "") & (~symbols.str.contains(multi_sep, regex=False))
+    expr_valid = expr.loc[valid]
+    symbols_valid = symbols.loc[valid]
+
+    # Pour chaque gène, sélectionner la sonde d'intensité moyenne maximale.
+    mean_expr = expr_valid.mean(axis=1)
+    best_probe = mean_expr.groupby(symbols_valid.to_numpy()).idxmax()  # gène -> ID sonde
+
+    gene_matrix = expr_valid.loc[best_probe.to_numpy()].copy()
+    gene_matrix.index = best_probe.index
+    gene_matrix.index.name = "gene"
+    return gene_matrix.sort_index()
