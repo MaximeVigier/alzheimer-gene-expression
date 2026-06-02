@@ -1,0 +1,21 @@
+# Environnement figé — projet analyse d'expression différentielle GSE5281
+# Python 3.14
+# Installation : pip install -r requirements.txt
+
+# Récupération des données GEO
+GEOparse==2.0.4
+
+# Manipulation de données
+pandas==3.0.0
+numpy==2.4.2
+
+# Statistiques
+scipy==1.17.0
+
+# Visualisation
+matplotlib==3.10.8
+seaborn==0.13.2
+
+# Environnement notebook
+jupyterlab==4.5.4
+ipykernel==7.2.0
