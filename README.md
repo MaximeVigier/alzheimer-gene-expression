@@ -64,8 +64,6 @@ Unsupervised projection on the 2,000 most variable genes. **PC1 (38.6 % of varia
 
 ## Biological interpretation
 
-> **Note.** The factual scaffold below (genes, fold-changes, FDR, literature pointers) is extracted directly from the analysis. The **expert commentary is mine to write** — see the marked blocks.
-
 ### The canonical AD signature is recovered
 
 | Gene | log2FC (AD − ctrl) | FDR | Expected role | Direction |
@@ -82,8 +80,17 @@ Unsupervised projection on the 2,000 most variable genes. **PC1 (38.6 % of varia
 
 *Literature anchor:* consistent with the dataset's origin study (Liang *et al.*, PNAS 2008) and subsequent entorhinal-cortex transcriptomics — a shift from a **neuronal** program (repressed) toward a **glial/inflammatory** program (activated).
 
-> **🧠 Expert commentary — _[to be written by Maxime]_**
-> _Your reading of the glial-vs-neuronal switch, why the entorhinal cortex shows it so strongly, and how it maps onto Braak staging._
+#### The glial/neuronal switch
+
+The entorhinal cortex holds a distinctive place in the timeline of Alzheimer's disease: it is one of the first regions invaded by tau pathology, well before clinical symptoms emerge. This early vulnerability makes it an ideal window onto the disease — and it explains why the transcriptomic signature observed here is so sharply defined.
+
+What this tissue reveals is a dual, mirror-image dynamic. On one side, the neuronal and synaptic compartment collapses. Neurons die, synapses are lost, and with them go their characteristic markers: SST (somatostatin, inhibitory interneurons), GABRA1 (GABA-A receptor), NEFL (neurofilament light, axonal integrity), CALB1 (calbindin, specific neuronal populations), and VGF (a neuropeptide involved in synaptic plasticity). All are downregulated — not as an artifact, but as a direct consequence of neuronal depopulation.
+
+On the other side, glia respond. Under assault, astrocytes activate and enter a state of reactive astrogliosis: they proliferate, hypertrophy, and overexpress GFAP (Glial Fibrillary Acidic Protein), their structural marker. This is not a sign of repair — it is an inflammatory response to ongoing damage, and its magnitude reflects the severity of the surrounding neurodegeneration.
+
+These two movements are inseparable: neither can be understood except in light of the other. Neuronal loss drives the glial reaction; the glial reaction bears witness to the neuronal loss. This is the signature expected of an actively neurodegenerating tissue.
+
+The volcano plot makes this dynamic immediately legible. To the left, a cluster of neuronal and synaptic genes — SST, GABRA1, NEFL, CALB1, VGF — significantly downregulated. To the right, standing alone, GFAP: upregulated and isolated, like the final alarm signal of a tissue losing its neurons. The symmetry is no coincidence — it is the visual translation of a coherent biological mechanism, and it is precisely what a good volcano plot should let you see.
 
 ### The "famous" AD genes are NOT differentially expressed — and that is expected
 
@@ -96,8 +103,13 @@ Unsupervised projection on the 2,000 most variable genes. **PC1 (38.6 % of varia
 
 These genes drive AD through **post-translational** mechanisms (APP cleavage, tau hyperphosphorylation, APOE isoforms) — not mRNA abundance. A transcriptomic analysis *cannot* be expected to flag them.
 
-> **🧠 Expert commentary — _[to be written by Maxime]_**
-> _Why this is a feature, not a bug — and what it says about choosing the right level of biological observation._
+#### The "post-translational" genes
+
+Alzheimer's most emblematic genes — MAPT, APP, PSEN1, APOE — do not appear as differentially expressed in this analysis. This is not a blind spot: it is the expected behavior.
+
+Their role in the pathology does not run through transcriptional dysregulation. MAPT produces tau protein at normal levels; it is its hyperphosphorylation that turns it pathological. APP is expressed at stable levels; it is its cleavage by secretases that generates the amyloid peptides. PSEN1 encodes the catalytic subunit of the γ-secretase complex — its contribution lies in that cleaving activity, not in its own transcript abundance. APOE acts through its protein isoforms, whose properties differ radically by allele — a distinction invisible at the mRNA level. A differential expression analysis measures transcript levels; it is, by construction, blind to these post-translational mechanisms.
+
+The absence of these genes from the results is therefore information in itself: it confirms that the tool used is consistent with what we know of the biology. What the volcano plot shows — neuronal collapse, glial reaction — are the tissue-level consequences of these upstream molecular mechanisms. The two readings are complementary, not competing.
 
 ### Methodological caveats (scientific honesty)
 
