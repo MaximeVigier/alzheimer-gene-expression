@@ -16,6 +16,9 @@ scipy==1.17.0
 matplotlib==3.10.8
 seaborn==0.13.2
 
+# Sauvegarde des matrices intermediaires (format parquet)
+pyarrow==23.0.1
+
 # Environnement notebook
 jupyterlab==4.5.4
 ipykernel==7.2.0
