@@ -63,7 +63,7 @@ def volcano_plot(
         mask = cat == label
         ax.scatter(results.loc[mask, "log2FC"], y[mask], s=10, alpha=0.5,
                    c=colors[label], edgecolors="none",
-                   label={"up": "↑ chez AD", "down": "↓ chez AD", "ns": "n.s."}[label])
+                   label={"up": "↑ in AD", "down": "↓ in AD", "ns": "n.s."}[label])
 
     # Lignes de seuil
     p_thresh = results.loc[results["p_adj"] < alpha, "p_value"].max()
@@ -81,11 +81,11 @@ def volcano_plot(
             ax.annotate(gene, (x_g, y_g), xytext=(5, 4), textcoords="offset points",
                         fontsize=9, fontweight="bold")
 
-    ax.set_xlabel("log2 fold-change (AD − contrôle)")
+    ax.set_xlabel("log2 fold-change (AD − control)")
     ax.set_ylabel("−log10(p-value)")
-    ax.set_title(f"Volcano plot — cortex entorhinal (AD vs contrôle)\n"
-                 f"seuils : FDR < {alpha}, |log2FC| ≥ {lfc_threshold}")
-    ax.legend(title="Statut", loc="upper right", framealpha=0.9)
+    ax.set_title(f"Volcano plot — entorhinal cortex (AD vs control)\n"
+                 f"thresholds: FDR < {alpha}, |log2FC| ≥ {lfc_threshold}")
+    ax.legend(title="Status", loc="upper right", framealpha=0.9)
     return ax
 
 
@@ -119,7 +119,7 @@ def top_genes_heatmap(
     zdata = data.sub(data.mean(axis=1), axis=0).div(data.std(axis=1), axis=0)
 
     col_colors = meta.loc[data.columns, "group"].map(GROUP_PALETTE)
-    col_colors.name = "Groupe"
+    col_colors.name = "Group"
 
     g = sns.clustermap(
         zdata, cmap="RdBu_r", center=0, vmin=-2.5, vmax=2.5,
@@ -128,7 +128,7 @@ def top_genes_heatmap(
         cbar_kws={"label": "expression (z-score)"},
         dendrogram_ratio=(0.12, 0.08),
     )
-    g.ax_heatmap.set_xlabel(f"{data.shape[1]} échantillons (colorés par groupe)")
+    g.ax_heatmap.set_xlabel(f"{data.shape[1]} samples (coloured by group)")
     g.ax_heatmap.set_ylabel("")
 
     # Mettre en évidence les gènes canoniques dans les étiquettes
@@ -140,10 +140,10 @@ def top_genes_heatmap(
 
     # Légende des groupes
     handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in GROUP_PALETTE.values()]
-    g.ax_heatmap.legend(handles, GROUP_PALETTE.keys(), title="Groupe",
+    g.ax_heatmap.legend(handles, GROUP_PALETTE.keys(), title="Group",
                         bbox_to_anchor=(1.02, 1.12), loc="upper left", frameon=False)
-    g.figure.suptitle(f"Top {n_top} gènes différentiels + signature canonique\n"
-                      "(z-score par gène ; gènes AD connus en rouge)", y=1.02)
+    g.figure.suptitle(f"Top {n_top} differential genes + canonical signature\n"
+                      "(per-gene z-score; known AD genes in red)", y=1.02)
     return g
 
 
@@ -185,10 +185,10 @@ def pca_plot(
         ax.scatter(scores_df.loc[m, "PC1"], scores_df.loc[m, "PC2"],
                    s=70, c=color, label=grp, edgecolors="white", linewidths=0.8)
 
-    ax.set_xlabel(f"PC1 ({100*var_ratio[0]:.1f} % de variance)")
-    ax.set_ylabel(f"PC2 ({100*var_ratio[1]:.1f} % de variance)")
-    ax.set_title(f"PCA des échantillons (cortex entorhinal)\n{n_top_var} gènes les plus variables")
-    ax.legend(title="Groupe")
+    ax.set_xlabel(f"PC1 ({100*var_ratio[0]:.1f}% of variance)")
+    ax.set_ylabel(f"PC2 ({100*var_ratio[1]:.1f}% of variance)")
+    ax.set_title(f"PCA of samples (entorhinal cortex)\n{n_top_var} most variable genes")
+    ax.legend(title="Group")
     ax.axhline(0, color="grey", lw=0.5, alpha=0.5)
     ax.axvline(0, color="grey", lw=0.5, alpha=0.5)
     return ax, scores_df, var_ratio
