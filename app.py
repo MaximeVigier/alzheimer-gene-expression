@@ -71,7 +71,7 @@ if os.path.exists(csv_path):
         log2fc_threshold = st.slider("log2FoldChange Threshold", 0.0, 3.0, 1.0, 0.1)
     
     # Apply filters
-    filtered_df = df[(df['FDR'] < fdr_threshold) & (abs(df['log2FoldChange']) > log2fc_threshold)]
+    filtered_df = df[(df['p_adj'] < fdr_threshold) & (df['log2FC'].abs() > log2fc_threshold)]
     
     # Show filtered table
     st.markdown(f"Showing {len(filtered_df)} genes with FDR < {fdr_threshold} and |log2FC| > {log2fc_threshold}")
