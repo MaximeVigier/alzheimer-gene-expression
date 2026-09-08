@@ -85,7 +85,7 @@ st.subheader("Canonical AD Genes")
 canonical_genes_data = {
     'Gene': ['GFAP', 'CD44', 'SPP1', 'GABRA1', 'SST', 'NEFL', 'CALB1', 'RTN3', 'VGF'],
     'log2FC (AD − ctrl)': [1.78, 2.91, 2.91, -2.76, -2.11, -1.41, -1.38, -1.34, -1.18],
-    'FDR': [0.0014, 0.001, <0.001, 0.0009, 0.0078, 0.0059, 0.0125, 0.0069, 0.0012],
+    'FDR': ['0.0014', '0.001', '<0.001', '0.0009', '0.0078', '0.0059', '0.0125', '0.0069', '0.0012'],
     'Expected role': ['Reactive astrogliosis', 'Glial / inflammatory', 'Glial / inflammatory', 'GABAergic synaptic', 'Interneuron marker', 'Neurofilament (neuronal)', 'Calcium-binding neuronal', 'Neuronal, APP processing', 'Neuropeptide / synaptic'],
     'Direction': ['↑ as expected', '↑ as expected', '↑ as expected', '↓ as expected', '↓ as expected', '↓ as expected', '↓ as expected', '↓ as expected', '↓ as expected']
 }
@@ -142,4 +142,4 @@ These trade-offs are deliberate for a pipeline-focused portfolio project.
 """)
 
 st.markdown("---")
-st.caption("Data from NCBI GEO accession [GSE5281](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE5281). Code and dataset available on [GitHub](https://github.com/your-username/alzheimer-gene-expression)")
+st.caption("Data from NCBI GEO accession [GSE5281](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE5281). Code and dataset available on [GitHub](https://github.com/MaximeVigier/alzheimer-gene-expression)")
