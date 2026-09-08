@@ -28,7 +28,7 @@ st.subheader("Volcano Plot")
 volcano_img_path = os.path.join(figures_dir, "volcano_entorhinal.png")
 if os.path.exists(volcano_img_path):
     volcano_img = Image.open(volcano_img_path)
-    st.image(volcano_img, caption="Volcano plot of differential gene expression", use_column_width=True)
+    st.image(volcano_img, caption="Volcano plot of differential gene expression", use_container_width=True)
 else:
     st.warning("Volcano plot image not found")
 
@@ -37,7 +37,7 @@ st.subheader("Heatmap - Top Differential Genes")
 heatmap_img_path = os.path.join(figures_dir, "heatmap_top_genes.png")
 if os.path.exists(heatmap_img_path):
     heatmap_img = Image.open(heatmap_img_path)
-    st.image(heatmap_img, caption="Heatmap of top differentially expressed genes", use_column_width=True)
+    st.image(heatmap_img, caption="Heatmap of top differentially expressed genes", use_container_width=True)
 else:
     st.warning("Heatmap image not found")
 
@@ -46,7 +46,7 @@ st.subheader("PCA of Samples")
 pca_img_path = os.path.join(figures_dir, "pca_samples.png")
 if os.path.exists(pca_img_path):
     pca_img = Image.open(pca_img_path)
-    st.image(pca_img, caption="PCA plot showing separation of AD vs control samples", use_column_width=True)
+    st.image(pca_img, caption="PCA plot showing separation of AD vs control samples", use_container_width=True)
 else:
     st.warning("PCA image not found")
 
