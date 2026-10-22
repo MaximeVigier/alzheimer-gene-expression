@@ -2,7 +2,7 @@
 
 A reproducible transcriptomic analysis comparing brain tissue from **Alzheimer's disease (AD) patients** and **healthy aged controls**, focused on the **entorhinal cortex** — the earliest region affected by AD pathology.
 
-> **About this project.** I am a **PhD in biology specialised in Alzheimer's disease**, training as a **data scientist**. This project sits deliberately at that intersection: a clean, well-engineered Python pipeline (modular `src/`, version-controlled notebooks, reproducible environment) applied to a question I understand at the bench level. The goal is not only to recover a known biological signature, but to make every methodological choice explicit and defensible — the way a life scientist who codes should work.
+> **About this project.** I hold a PhD in biotechnology (Alzheimer's disease, neuronal models) and a Data Scientist certification (Liora / Mines Paris-PSL). I wanted a pipeline I could check against biology I know: modular `src/`, version-controlled notebooks, reproducible environment, and every methodological choice written down.
 
 ---
 
@@ -78,19 +78,13 @@ Unsupervised projection on the 2,000 most variable genes. **PC1 (38.6 % of varia
 | **RTN3** | −1.34 | 0.0069 | Neuronal, APP processing | ↓ as expected |
 | **VGF** | −1.18 | 0.0012 | Neurosecretory / synaptic | ↓ as expected |
 
-*Literature anchor:* consistent with the dataset's origin study (Liang *et al.*, PNAS 2008) and subsequent entorhinal-cortex transcriptomics — a shift from a **neuronal** program (repressed) toward a **glial/inflammatory** program (activated).
+#### Neuronal markers down, glial markers up
 
-#### The glial/neuronal switch
+The entorhinal cortex is one of the first regions reached by tau pathology, well before clinical symptoms, which makes it a sensible place to look for an early signature.
 
-The entorhinal cortex holds a distinctive place in the timeline of Alzheimer's disease: it is one of the first regions invaded by tau pathology, well before clinical symptoms emerge. This early vulnerability makes it an ideal window onto the disease — and it explains why the transcriptomic signature observed here is so sharply defined.
+The neuronal and synaptic markers fall: SST (somatostatin, inhibitory interneurons), GABRA1 (GABA-A receptor), NEFL (neurofilament light), CALB1 (calbindin) and VGF (neuropeptide linked to synaptic plasticity). The glial and inflammatory markers rise: GFAP (reactive astrocytes), CD44 and SPP1. The volcano plot shows both groups on opposite sides.
 
-What this tissue reveals is a dual, mirror-image dynamic. On one side, the neuronal and synaptic compartment collapses. Neurons die, synapses are lost, and with them go their characteristic markers: SST (somatostatin, inhibitory interneurons), GABRA1 (GABA-A receptor), NEFL (neurofilament light, axonal integrity), CALB1 (calbindin, specific neuronal populations), and VGF (a neuropeptide involved in synaptic plasticity). All are downregulated — not as an artifact, but as a direct consequence of neuronal depopulation.
-
-On the other side, glia respond. Under assault, astrocytes activate and enter a state of reactive astrogliosis: they proliferate, hypertrophy, and overexpress GFAP (Glial Fibrillary Acidic Protein), their structural marker. This is not a sign of repair — it is an inflammatory response to ongoing damage, and its magnitude reflects the severity of the surrounding neurodegeneration.
-
-These two movements are inseparable: neither can be understood except in light of the other. Neuronal loss drives the glial reaction; the glial reaction bears witness to the neuronal loss. This is the signature expected of an actively neurodegenerating tissue.
-
-The volcano plot makes this dynamic immediately legible. To the left, a cluster of neuronal and synaptic genes — SST, GABRA1, NEFL, CALB1, VGF — significantly downregulated. To the right, standing alone, GFAP: upregulated and isolated, like the final alarm signal of a tissue losing its neurons. The symmetry is no coincidence — it is the visual translation of a coherent biological mechanism, and it is precisely what a good volcano plot should let you see.
+A caveat on reading this: GSE5281 uses laser-captured neurons, so these differences reflect the sampled cells' expression and possible contamination or cell-composition shifts, not a direct count of neuronal loss. The glial/neuronal reading is consistent with the literature, but this dataset alone does not prove it.
 
 ### The "famous" AD genes are NOT differentially expressed — and that is expected
 
@@ -103,13 +97,7 @@ The volcano plot makes this dynamic immediately legible. To the left, a cluster 
 
 These genes drive AD through **post-translational** mechanisms (APP cleavage, tau hyperphosphorylation, APOE isoforms) — not mRNA abundance. A transcriptomic analysis *cannot* be expected to flag them.
 
-#### The "post-translational" genes
-
-Alzheimer's most emblematic genes — MAPT, APP, PSEN1, APOE — do not appear as differentially expressed in this analysis. This is not a blind spot: it is the expected behavior.
-
-Their role in the pathology does not run through transcriptional dysregulation. MAPT produces tau protein at normal levels; it is its hyperphosphorylation that turns it pathological. APP is expressed at stable levels; it is its cleavage by secretases that generates the amyloid peptides. PSEN1 encodes the catalytic subunit of the γ-secretase complex — its contribution lies in that cleaving activity, not in its own transcript abundance. APOE acts through its protein isoforms, whose properties differ radically by allele — a distinction invisible at the mRNA level. A differential expression analysis measures transcript levels; it is, by construction, blind to these post-translational mechanisms.
-
-The absence of these genes from the results is therefore information in itself: it confirms that the tool used is consistent with what we know of the biology. What the volcano plot shows — neuronal collapse, glial reaction — are the tissue-level consequences of these upstream molecular mechanisms. The two readings are complementary, not competing.
+Alzheimer's best-known genes are not differentially expressed here. MAPT (tau) is produced at normal levels and becomes pathological through hyperphosphorylation. APP is stable, and its cleavage by secretases generates the amyloid peptides. PSEN1 encodes the catalytic subunit of gamma-secretase, so its contribution lies in enzymatic activity. APOE acts through allele-specific protein isoforms. A differential expression analysis measures transcript levels and cannot see these mechanisms.
 
 ### Methodological caveats (scientific honesty)
 
